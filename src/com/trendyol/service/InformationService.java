@@ -9,15 +9,13 @@ public class InformationService {
 
 	private EmailSender emailSender;
 
-
-
 	public InformationService(SmsSender smsSender, EmailSender emailSender) {
 		this.smsSender = smsSender;
 		this.emailSender = emailSender;
 	}
 
 	public void sendSms(SmsDTO smsDTO){
-		if(smsSender.validateSmsCnt(smsDTO.getSender())) smsSender.sendSms(smsDTO);
+		if(smsSender.validateSmsCount(smsDTO.getSender())) smsSender.sendSms(smsDTO);
 		else System.out.println("Sms Validation Error Occured");
 
 	}

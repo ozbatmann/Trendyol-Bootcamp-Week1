@@ -11,7 +11,7 @@ public class SmsSender {
 		this.MAX_SMS_COUNT = MAX_SMS_COUNT;
 	}
 
-	public boolean validateSmsCnt(UserDTO userDTO) {
+	public boolean validateSmsCount(UserDTO userDTO) {
 		return userDTO.getSmsCount() < getMAX_SMS_COUNT();
 	}
 
