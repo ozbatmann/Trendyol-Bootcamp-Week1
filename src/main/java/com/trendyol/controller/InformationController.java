@@ -17,7 +17,7 @@ public class InformationController {
 		try{
 			if(smsService.validate(baseInformationDTO)) smsService.sendInformation(baseInformationDTO);
 		} catch (InformationSendException e){
-			e.printStackTrace();
+			System.out.println("Validation error " + e.getMessage());
 		}
 	}
 
@@ -25,8 +25,14 @@ public class InformationController {
 		try{
 			if(emailService.validate(baseInformationDTO)) emailService.sendInformation(baseInformationDTO);
 		} catch (InformationSendException e){
-			e.printStackTrace();
+			System.out.println("Validation error " + e.getMessage());
 		}
+
+	}
+
+	public void sendSmsAndEmail(BaseInformationDTO baseInformationDTO) {
+		sendEmail(baseInformationDTO);
+		sendSms(baseInformationDTO);
 
 	}
 

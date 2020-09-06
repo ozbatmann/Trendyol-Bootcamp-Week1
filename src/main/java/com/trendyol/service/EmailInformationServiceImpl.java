@@ -1,5 +1,7 @@
 package com.trendyol.service;
 
+import com.trendyol.enums.ErrorMessage;
+import com.trendyol.enums.LanguageEnum;
 import com.trendyol.exception.InformationSendException;
 import com.trendyol.model.BaseInformationDTO;
 
@@ -22,9 +24,14 @@ public class EmailInformationServiceImpl implements InformationService {
 	}
 	@Override
 	public boolean validate(BaseInformationDTO baseInformationDTO) throws InformationSendException {
-		if(baseInformationDTO.getSender().getEmailCount() < getMAX_EMAIL_COUNT()){
+		if (baseInformationDTO.getSender().getEmailCount() < getMAX_EMAIL_COUNT()) {
 			return true;
 		}
-		throw new InformationSendException("Email validation error occured");
+		if (baseInformationDTO.getSender().getUserLanguage().equals(LanguageEnum.EN)) {
+			throw new InformationSendException(ErrorMessage.Email_Error_En.getMessage());
+		} else if (baseInformationDTO.getSender().getUserLanguage().equals(LanguageEnum.TR)) {
+			throw new InformationSendException(ErrorMessage.Email_Error_Tr.getMessage());
+		}
+		return false ;
 	}
 }

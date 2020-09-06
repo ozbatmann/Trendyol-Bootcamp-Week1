@@ -1,5 +1,7 @@
 package com.trendyol.service;
 
+import com.trendyol.enums.ErrorMessage;
+import com.trendyol.enums.LanguageEnum;
 import com.trendyol.exception.InformationSendException;
 import com.trendyol.model.BaseInformationDTO;
 
@@ -27,6 +29,11 @@ public class SmsInformationServiceImpl implements InformationService {
 		if(baseInformationDTO.getSender().getSmsCount() < getMAX_SMS_COUNT()){
 			return true;
 		}
-		throw new InformationSendException("Sms validation error occured");
+		if (baseInformationDTO.getSender().getUserLanguage().equals(LanguageEnum.EN)) {
+			throw new InformationSendException(ErrorMessage.Sms_Error_En.getMessage());
+		} else if (baseInformationDTO.getSender().getUserLanguage().equals(LanguageEnum.TR)) {
+			throw new InformationSendException(ErrorMessage.Sms_Error_Tr.getMessage());
+		}
+		return false;
 	}
 }
