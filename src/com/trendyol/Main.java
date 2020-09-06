@@ -3,33 +3,36 @@ package com.trendyol;
 import com.trendyol.model.EmailDTO;
 import com.trendyol.model.SmsDTO;
 import com.trendyol.model.UserDTO;
-import com.trendyol.service.EmailSender;
+import com.trendyol.service.EmailInformationServiceImpl;
 import com.trendyol.service.InformationService;
-import com.trendyol.service.SmsSender;
+import com.trendyol.controller.InformationController;
+import com.trendyol.service.SmsInformationServiceImpl;
 
 public class Main {
 
-    public static void main(String[] args) {
-        // write your code here
+	public static void main(String[] args) {
+		// write your code here
 
-        EmailSender emailSender = new EmailSender(10000);
-        SmsSender smsSender = new SmsSender(1000);
+		InformationService emailSender = new EmailInformationServiceImpl(10000);
+		InformationService smsSender = new SmsInformationServiceImpl(1000);
 
-        InformationService informationService = new InformationService(smsSender,emailSender);
+		InformationController informationController = new InformationController();
 
-        UserDTO sender = new UserDTO("ali","ali@gmail.com","5051403166",0,0);
-        UserDTO receiver = new UserDTO("veli","veli@gmail.com","5051403167",0,0);
+		UserDTO sender = new UserDTO("ali", "ali@gmail.com", "5051403166", 0, 0);
+		UserDTO receiver = new UserDTO("veli", "veli@gmail.com", "5051403167", 0, 0);
 
-        String content = "Sms content";
-        SmsDTO smsDTO = new SmsDTO(sender,receiver,content);
-        EmailDTO emailDTO = new EmailDTO(sender,receiver,content);
+		String content = "Sms content";
+		SmsDTO smsDTO = new SmsDTO(sender, receiver, content);
+		EmailDTO emailDTO = new EmailDTO(sender, receiver, content);
 
-        for(int i = 0; i < 1001; i++){
-            informationService.sendSms(smsDTO);
-        }
-        for(int i = 0; i < 10001; i++){
-            informationService.sendEmail(emailDTO);
-        }
+		informationController.setInformationService(smsSender);
+		for(int i = 0; i < 10019; i++){
+			informationController.sendInformation(smsDTO);
+		}
+		informationController.setInformationService(emailSender);
+		for(int i = 0; i < 10001; i++){
+			informationController.sendInformation(emailDTO);
+		}
 
-    }
+	}
 }

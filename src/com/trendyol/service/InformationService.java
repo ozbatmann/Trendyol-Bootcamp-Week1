@@ -1,33 +1,10 @@
 package com.trendyol.service;
 
-import com.trendyol.model.EmailDTO;
-import com.trendyol.model.SmsDTO;
+import com.trendyol.model.BaseInformationDTO;
 
-public class InformationService {
+public interface InformationService {
 
-	private SmsSender smsSender;
+	public void sendInformation(BaseInformationDTO baseInformationDTO);
 
-	private EmailSender emailSender;
-
-
-
-	public InformationService(SmsSender smsSender, EmailSender emailSender) {
-		this.smsSender = smsSender;
-		this.emailSender = emailSender;
-	}
-
-	public void sendSms(SmsDTO smsDTO){
-		if(smsSender.validateSmsCnt(smsDTO.getSender())) smsSender.sendSms(smsDTO);
-		else System.out.println("Sms Validation Error Occured");
-
-	}
-	public void sendEmail(EmailDTO emailDTO){
-		if(emailSender.validateEmailCount(emailDTO.getFrom())) emailSender.sendEmail(emailDTO);
-		else System.out.println("Email Validation Error Occured");
-	}
-	public void sendSmsAndEmail(EmailDTO emailDTO, SmsDTO smsDTO){
-		sendEmail(emailDTO);
-		sendSms(smsDTO);
-	}
-
+	public boolean validate(BaseInformationDTO baseInformationDTO);
 }
