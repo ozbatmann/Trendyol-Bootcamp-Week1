@@ -13,8 +13,8 @@ public class Main {
 	public static void main(String[] args) {
 		// write your code here
 
-		InformationService emailSender = new EmailInformationServiceImpl(10000);
-		InformationService smsSender = new SmsInformationServiceImpl(1000);
+		InformationService emailSender = new EmailInformationServiceImpl(10);
+		InformationService smsSender = new SmsInformationServiceImpl(10);
 
 		InformationController informationController = new InformationController();
 
@@ -25,13 +25,13 @@ public class Main {
 		SmsDTO smsDTO = new SmsDTO(sender, receiver, content);
 		EmailDTO emailDTO = new EmailDTO(sender, receiver, content);
 
-		informationController.setInformationService(smsSender);
-		for(int i = 0; i < 10019; i++){
-			informationController.sendInformation(smsDTO);
+		informationController.setSmsService(smsSender);
+		for(int i = 0; i < 12; i++){
+			informationController.sendSms(smsDTO);
 		}
-		informationController.setInformationService(emailSender);
-		for(int i = 0; i < 10001; i++){
-			informationController.sendInformation(emailDTO);
+		informationController.setEmailService(emailSender);
+		for(int i = 0; i < 12; i++){
+			informationController.sendEmail(emailDTO);
 		}
 
 	}
