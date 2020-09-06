@@ -1,5 +1,6 @@
 package com.trendyol.service;
 
+import com.trendyol.exception.InformationSendException;
 import com.trendyol.model.BaseInformationDTO;
 
 public class SmsInformationServiceImpl implements InformationService {
@@ -22,7 +23,10 @@ public class SmsInformationServiceImpl implements InformationService {
 	}
 
 	@Override
-	public boolean validate(BaseInformationDTO baseInformationDTO) {
-		return baseInformationDTO.getSender().getSmsCount() < getMAX_SMS_COUNT();
+	public boolean validate(BaseInformationDTO baseInformationDTO) throws InformationSendException {
+		if(baseInformationDTO.getSender().getSmsCount() < getMAX_SMS_COUNT()){
+			return true;
+		}
+		throw new InformationSendException("Sms validation error occured");
 	}
 }

@@ -25,13 +25,13 @@ public class Main {
 		SmsDTO smsDTO = new SmsDTO(sender, receiver, content);
 		EmailDTO emailDTO = new EmailDTO(sender, receiver, content);
 
-		informationController.setInformationService(smsSender);
+		informationController.setSmsService(smsSender);
 		for(int i = 0; i < 10019; i++){
-			informationController.sendInformation(smsDTO);
+			informationController.sendSms(smsDTO);
 		}
-		informationController.setInformationService(emailSender);
+		informationController.setEmailService(emailSender);
 		for(int i = 0; i < 10001; i++){
-			informationController.sendInformation(emailDTO);
+			informationController.sendEmail(emailDTO);
 		}
 
 	}

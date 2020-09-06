@@ -1,5 +1,6 @@
 package com.trendyol.service;
 
+import com.trendyol.exception.InformationSendException;
 import com.trendyol.model.BaseInformationDTO;
 
 public class EmailInformationServiceImpl implements InformationService {
@@ -20,7 +21,10 @@ public class EmailInformationServiceImpl implements InformationService {
 		baseInformationDTO.getSender().incEmailCnt();
 	}
 	@Override
-	public boolean validate(BaseInformationDTO baseInformationDTO) {
-		return baseInformationDTO.getSender().getEmailCount() < getMAX_EMAIL_COUNT();
+	public boolean validate(BaseInformationDTO baseInformationDTO) throws InformationSendException {
+		if(baseInformationDTO.getSender().getEmailCount() < getMAX_EMAIL_COUNT()){
+			return true;
+		}
+		throw new InformationSendException("Email validation error occured");
 	}
 }
